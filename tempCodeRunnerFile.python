@@ -1,0 +1,5 @@
+a = [1, 2, 2]
+b = [2, 1, 2]
+
+# Check if sets of tuples are equal
+print(sorted(a) == sorted(b))  # Output: True
