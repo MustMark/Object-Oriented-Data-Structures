@@ -1,4 +1,4 @@
-def permute(original, index, part):
+def permute(original, index = 0, part = []):
     all_answer = []
     if index == len(original)-1:
         temp_answer = []
@@ -20,4 +20,4 @@ print("*** Fun with permute ***")
 original = [int(i) for i in input("input : ").split(",")]
 print(f"Original Cofllection:  {original}" )
 print("Collection of distinct numbers: ")
-print(f" {permute(original, 0, [])}")
+print(f" {permute(original)}")
