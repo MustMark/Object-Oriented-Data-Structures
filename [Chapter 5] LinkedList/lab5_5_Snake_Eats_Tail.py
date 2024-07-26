@@ -36,6 +36,22 @@ class LinkedList:
         if not baby:
             output += "->Empty"
         return output
+    
+    def get_size(self):
+        count = 1
+        current_node = self.head
+        while current_node.next != None:
+            count += 1
+            current_node = current_node.next
+        return count
+
+    def get_sum_data(self):
+        sum = 0
+        current_node = self.head
+        while current_node != None:
+            sum += int(current_node.data)
+            current_node = current_node.next
+        return sum
 
     def have_baby(self):
         return self.head.next is not None
@@ -51,14 +67,19 @@ class LinkedList:
     def swap_head_tail(self):
         old_head_next = self.head.next
         current_node = self.head
-        while current_node.next != None:
-            if current_node.next.next == None:
-                old_tail = current_node.next
-                current_node.next = self.head
-                current_node.next.next = None
-                self.head = old_tail
-                self.head.next = old_head_next
-            current_node = current_node.next
+        if self.get_size() > 2:
+            while current_node.next != None:
+                if current_node.next.next == None:
+                    old_tail = current_node.next
+                    current_node.next = self.head
+                    current_node.next.next = None
+                    self.head = old_tail
+                    self.head.next = old_head_next
+                current_node = current_node.next
+        else:
+            self.head = self.head.next
+            self.head.next = current_node
+            self.head.next.next = None
     
     def swap_baby(self):
         previous_node = self.head
@@ -94,23 +115,27 @@ class LinkedList:
         return output
     
     def compare_data(self, reverse_line, num):
-        output = "]"
-        current_node = reverse_line.head
-        while current_node.next != None:
-            if int(current_node.data) == 0 or int(num) % int(current_node.data) != 0:
-                output += " ," + str(current_node.data)
-                reverse_line.head = current_node.next
-            else:
-                output += "["
-                self.head = reverse_line.reverse().head
-                if output != "][":
-                    output = output[0] + output[3::]
-                return output[::-1]
-            current_node = current_node.next
-        self.swap_head_tail()
-        return "[]"
+        if self.get_sum_data() < int(num):
+            output = "]"
+            current_node = reverse_line.head
+            while current_node.next != None:
+                if int(current_node.data) == 0 or int(num) % int(current_node.data) != 0:
+                    output += " ," + str(current_node.data)[::-1]
+                    reverse_line.head = current_node.next
+                else:
+                    output += "["
+                    self.head = reverse_line.reverse().head
+                    if output != "][":
+                        output = output[0] + output[3::]
+                    return output[::-1]
+                current_node = current_node.next
+            self.swap_head_tail()
+            return "[]"
+        else:
+            return "[]"
 
 snake_game = True
+
 while snake_game:     
     input_snake_family, input_play = input("Snake Game : ").split("/")
     snake_family = input_snake_family.split(" ")
@@ -119,27 +144,29 @@ while snake_game:
     line = LinkedList()
 
     for snake in snake_family:
-        line.append(snake)
+        line.append(int(snake))
 
     print(line)
-
-    for play in play_list:
-        if play == "SW":
-            line.swap_baby()
-            print(f"Swap success!")
-        elif play == "SH":
-            output = line.delete_bigger()
-            print(f"Shake success!->{output}")
-        elif play[0] == "F":
-            char, num = play.split(" ")
-            line.append(num)
-            print(f"Steal success!->{num}")
-        elif play[0] == "D":
-            char, num = play.split(" ")
-            output = line.compare_data(line.reverse(), num)
-            print(f"Play success!->{output}")
-        print(line)
-        print(f"------------------------------")
-        if not line.have_baby():
-            print("Mom is dead")
-            break
+    if not line.have_baby():
+        print("Mom is dead")
+    else:
+        for play in play_list:
+            if play == "SW":
+                line.swap_baby()
+                print(f"Swap success!")
+            elif play == "SH":
+                output = line.delete_bigger()
+                print(f"Shake success!->{output}")
+            elif play[0] == "F":
+                char, num = play.split(" ")
+                line.append(num)
+                print(f"Steal success!->{num}")
+            elif play[0] == "D":
+                char, num = play.split(" ")
+                output = line.compare_data(line.reverse(), num)
+                print(f"Play success!->{output}")
+            print(line)
+            print(f"------------------------------")
+            if not line.have_baby():
+                print("Mom is dead")
+                break
