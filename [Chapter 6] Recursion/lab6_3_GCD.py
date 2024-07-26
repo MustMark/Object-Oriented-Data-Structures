@@ -5,7 +5,6 @@ def find_gcd(n1, n2):
         n1, n2 = n2, n1%n2
         return find_gcd(n1, n2)  
 
-
 n1, n2 = [int(i) for i in input("Enter Input : ").split(" ")]
 
 if n1 == 0 and n2 == 0:

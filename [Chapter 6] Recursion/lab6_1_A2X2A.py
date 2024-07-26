@@ -18,7 +18,6 @@ def new_print(i, count, num):
         else:
             new_print(ord("A"), count, num-1)
 
-
 char = input("Enter input: ")
 
 new_print(ord("A"), ord("A"), ord(char.upper()))

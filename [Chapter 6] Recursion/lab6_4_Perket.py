@@ -14,7 +14,6 @@ def perket(item_list, result=[], i=0, j=0):
         else:
             return perket(item_list, result, i+1)
 
-
 item_list = input("Enter Input : ").split(",")
 
 print(perket(item_list))

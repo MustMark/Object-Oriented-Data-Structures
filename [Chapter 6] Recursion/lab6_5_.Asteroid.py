@@ -13,7 +13,6 @@ def asteroid_collision(asts, i=0):
             return asteroid_collision(asts,0)
         else:
             return asteroid_collision(asts,i+1)
-            
 
 x = [int(i) for i in input("Enter Input : ").split(",")]
 print(asteroid_collision(x))
