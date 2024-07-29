@@ -29,20 +29,72 @@ class LinkedList:
     def swap_cursor_left(self):
         if self.head.data == "|":
             return
-        else:
+        elif self.head.next.data == "|":
             previous_node = self.head
             current_node = self.head.next
+            previous_node.next = current_node.next
+            self.head = current_node
+            self.head.next = previous_node
+        else:
+            previous_previous_node = self.head
+            previous_node = self.head.next
+            current_node = self.head.next.next
             while current_node.data != "|":
-
+                previous_previous_node = previous_node
+                previous_node = current_node
+                current_node = current_node.next
+            previous_previous_node.next = current_node
+            previous_node.next = current_node.next
+            current_node.next = previous_node
 
     def swap_cursor_right(self):
-        pass
+        previous_node = None
+        current_node = self.head
+        next_node = self.head.next
+        if current_node.data == "|":
+            if next_node:
+                current_node.next = next_node.next
+                self.head = next_node
+                self.head.next = current_node
+            return
+        while current_node.data != "|":
+            previous_node = current_node
+            current_node = next_node
+            next_node = next_node.next
+        if current_node.next == None:
+            return
+        previous_node.next = next_node
+        current_node.next = next_node.next
+        next_node.next = current_node
 
     def delete_left(self):
-        pass
+        if self.head.data == "|":
+            return
+        elif self.head.next.data == "|":
+            self.head = self.head.next
+        else:
+            previous_previous_node = self.head
+            previous_node = self.head.next
+            current_node = self.head.next.next
+            while current_node.data != "|":
+                previous_previous_node = previous_node
+                previous_node = current_node
+                current_node = current_node.next
+            previous_previous_node.next = current_node
 
     def delete_right(self):
-        pass
+        current_node = self.head
+        next_node = self.head.next
+        if current_node.data == "|":
+            if current_node.next:
+                current_node.next = current_node.next.next
+            return
+        while current_node.data != "|":
+            current_node = next_node
+            next_node = next_node.next
+        if current_node.next == None:
+            return
+        current_node.next = next_node.next
 
     def isEmpty(self):
         return self.head is None
@@ -73,4 +125,5 @@ for command in command_list:
         text.delete_left()
     elif command == "D":
         text.delete_right()
-    print(text)
+        
+print(text)
