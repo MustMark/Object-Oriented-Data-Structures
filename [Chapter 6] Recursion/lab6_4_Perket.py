@@ -1,19 +1,25 @@
-def perket(item_list, result=[], i=0, j=0):
-    j = i+1
-    if i == len(item_list) - 1:
-        return min(result)
-    else:
-        if j == len(item_list) - 1:
-            s1, b1 = item_list[i].split(" ")
-            s2, b2 = item_list[i+1].split(" ")
-            sweet = int(s1) * int(s2)
-            bitter = int(b1) + int(b2)
-            result.append(abs(sweet-bitter))
-        if j == len(item_list):
-            return perket(item_list, result, i, j+1)
-        else:
-            return perket(item_list, result, i+1)
+def perket(sweet_list, bitter_list, index = 0, number = 0, s = 1, b = 0):
+    if index == len(perket_items_list):
+        if number != 0:
+            return [abs(b-s)]
+        return []
+    
+    sum_s = s * int(sweet_list[index])
+    sum_b = b + int(bitter_list[index])
+    
+    in_loop = perket(sweet_list, bitter_list, index + 1, number, s, b)
+    out_loop = perket(sweet_list, bitter_list, index + 1, number + 1, sum_s, sum_b)
 
-item_list = input("Enter Input : ").split(",")
+    return in_loop + out_loop
 
-print(perket(item_list))
+perket_items_list = input("Enter Input : ").split(",")
+
+sweet_list = []
+bitter_list = []
+
+for perket_items in perket_items_list:
+    sweet, bitter = perket_items.split()
+    sweet_list.append(sweet)
+    bitter_list.append(bitter)
+
+print(min(perket(sweet_list, bitter_list)))
