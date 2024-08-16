@@ -17,7 +17,6 @@ class BinarySearchTree:
             self.root = Node(val)
         else:
             current = self.root
-
             while True:
                 if val < current.data:
                     if current.left:
@@ -42,7 +41,6 @@ def printTree90(node, level = 0):
 
 def father(data, current_node, previous_node = None):
     result = "Not Found Data"
-
     if current_node == None:
         return "Not Found Data"
     if current_node.data == data:

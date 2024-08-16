@@ -1,5 +1,5 @@
 class Node:
-    def __init__(self, data,left = None,right = None):
+    def __init__(self, data, left = None, right = None):
         self.data = data
         self.left = left
         self.right = right
@@ -12,24 +12,40 @@ class BST:
         self.root = None
 
     def append(self, data):
-        pass
+        if self.root == None:
+            self.root = Node(data)
+        else:
+            current_node = self.root
+            while True:
+                if ord(data) < ord(current_node.data):
+                    if current_node.left == None:
+                        current_node.left = Node(data)
+                        return
+                    else:
+                        current_node = current_node.left
+                elif ord(data) >= ord(current_node.data):
+                    if current_node.right == None:
+                        current_node.right = Node(data)
+                        return
+                    else:
+                        current_node = current_node.right
 
     def cut(self, data):
         pass
                     
-    def preorder(self, node,stop):
+    def preorder(self, node, stop):
         pass
 
-    def inorder(self, node,stop):
+    def inorder(self, node, stop):
         pass
 
-    def postorder(self, node,stop):
+    def postorder(self, node, stop):
         pass
             
-    def printMirrorTree(self, node, level=0):
+    def printMirrorTree(self, node, level = 0):
         pass
 
-    def printTree(self, node, level=0):
+    def printTree(self, node, level = 0):
         if node != None:
             self.printTree(node.right, level + 1)
             print('     ' * level, node)
