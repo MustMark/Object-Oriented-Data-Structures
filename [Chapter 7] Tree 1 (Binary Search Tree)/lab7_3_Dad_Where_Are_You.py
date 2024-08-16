@@ -40,28 +40,28 @@ def printTree90(node, level = 0):
         print('     ' * level, node)
         printTree90(node.left, level + 1)
 
-def father(previous_node, data, current_node):
-    result = None
-    
-    print(f"1 : {previous_node}, {data}, {current_node}")
-    if current_node.left != None:
-        previous_node = current_node
-        result = father(previous_node, data, current_node.left)
-        if result != None:
-            return result
-    if current_node.right != None:
-        previous_node = current_node
-        result = father(previous_node, data, current_node.right)
-        if result != None:
-            return result
-    print(f"2 : {previous_node}, {data}, {current_node}")
+def father(data, current_node, previous_node = None):
+    result = "Not Found Data"
+
+    if current_node == None:
+        return "Not Found Data"
     if current_node.data == data:
-        return previous_node.data
+        if previous_node != None:
+            return previous_node.data
+        else:
+            return f"None Because {data} is Root"
+    else:
+        result = father(data, current_node.left, current_node)
+        if result != "Not Found Data":
+            return result
+        result = father(data, current_node.right, current_node)
+        if result != "Not Found Data":
+            return result
     return result
 
 tree = BinarySearchTree()
 data = input("Enter Input : ").split("/")
 for e in data[0].split():
-    tree.create(e)
+    tree.create(int(e))
 printTree90(tree.root)
-print(father(tree.root, data[1], tree.root))
+print(father(int(data[1]), tree.root))
