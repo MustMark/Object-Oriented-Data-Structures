@@ -1,6 +1,6 @@
 def bubble_positive(numbers):
     for last in range(len(numbers) - 1, 0, -1):
-        swaped = False
+        swapped = False
         for i in range(last):
             count = 1
             if not numbers[i] < 0:
@@ -8,8 +8,8 @@ def bubble_positive(numbers):
                     count += 1
                 if numbers[i] > numbers[i+count] and numbers[i+count] >= 0:
                     numbers[i], numbers[i+count] = numbers[i+count], numbers[i]
-                    swaped = True
-        if not swaped:
+                    swapped = True
+        if not swapped:
             break
     return numbers
 
