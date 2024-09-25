@@ -27,32 +27,34 @@ class AVLTree:
     def __init__(self, root = None):
         self.root = None if root is None else root
 
-    def add(self, data):
+    def insert(self, data):
         data = int(data)
         if self.root == None:
             self.root = AVLTree.AVLNode(data)
         else:
-            self.root = AVLTree._add(self.root, data)
+            self.root = AVLTree._insert(self.root, data)
 
-    def _add(root, data):
+    def _insert(root, data):
         if root is None:
             return AVLTree.AVLNode(data)
         elif data < root.data:
-            root.left = AVLTree._add(root.left, data)
+            root.left = AVLTree._insert(root.left, data)
         else:
-            root.right = AVLTree._add(root.right, data)
-
+            root.right = AVLTree._insert(root.right, data)
+        
         root.setHeight()
         balance = root.balanceValue()
         
-        if balance > 1:
-            if data < root.right.data:
-                root.right = AVLTree.rotateRightChild(root.right)
-            return AVLTree.rotateLeftChild(root)
-        elif balance < -1:
-            if data >= root.left.data:
-                root.left = AVLTree.rotateLeftChild(root.left)
-            return AVLTree.rotateRightChild(root)
+        if abs(balance) > 1:
+            print("Not Balance, Rebalance!")
+            if balance > 1:
+                if data < root.right.data:
+                    root.right = AVLTree.rotateRightChild(root.right)
+                return AVLTree.rotateLeftChild(root)
+            elif balance < -1:
+                if data >= root.left.data:
+                    root.left = AVLTree.rotateLeftChild(root.left)
+                return AVLTree.rotateRightChild(root)
         return root
 
     def rotateLeftChild(root):
@@ -88,7 +90,6 @@ class AVLTree:
 
     def printTree(self):
         AVLTree._printTree(self.root)
-        print()
 
     def _printTree(node , level=0):
         if not node is None:
@@ -97,20 +98,12 @@ class AVLTree:
             AVLTree._printTree(node.left, level + 1)
 
 
-avl1 = AVLTree()
+myTree = AVLTree() 
+root = None
 
-inp = input('Enter Input : ').split(',')
-
-for i in inp:
-
-    if i[:2] == "AD":
-
-        avl1.add(i[3:])
-
-    elif i[:2] == "PR":
-
-        avl1.printTree()
-
-    elif i[:2] == "PO":
-
-        avl1.postOrder()
+data = input("Enter Input : ").split()
+for e in data:
+    print("insert :",e)
+    myTree.insert(e)
+    myTree.printTree()
+    print("===============")
